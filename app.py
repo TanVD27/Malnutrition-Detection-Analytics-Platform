@@ -91,7 +91,7 @@ body { background-color: #0E1117; color: white; }
 # -------------------------------
 # TITLE
 # -------------------------------
-st.title("Malnutrition Dashboard (0–5 Years)")
+st.title("Malnutrition Detection & Analytics Platform")
 st.markdown("**Maharashtra Analysis** · Star Schema · OLAP · Visualization · Reporting")
 
 # -------------------------------
