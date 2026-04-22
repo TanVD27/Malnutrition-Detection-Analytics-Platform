@@ -110,7 +110,7 @@ Interactive analysis using:
 
 ## ⚙️ Installation & Setup
 
-### 1. Clone Repository
+### Clone Repository
 ```bash
 git clone https://github.com/TanVD27/Malnutrition-Detection-Analytics-Platform.git
 cd alnutrition-Detection-Analytics-Platform
