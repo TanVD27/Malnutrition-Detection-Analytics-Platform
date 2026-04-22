@@ -11,80 +11,156 @@ from reportlab.lib import colors as rl_colors
 # -------------------------------
 # PAGE CONFIG
 # -------------------------------
-st.set_page_config(page_title="Malnutrition Dashboard", layout="wide")
+st.set_page_config(
+    page_title="Malnutrition AI Dashboard",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # -------------------------------
 # STYLE
 # -------------------------------
 st.markdown("""
 <style>
-body { background-color: #0E1117; color: white; }
 
-/* ── Metric Cards ── */
+/* 🌌 MAIN BACKGROUND */
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ✨ GLASS CARD EFFECT */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+
+/* 📊 KPI CARDS (PREMIUM) */
 .metric-card {
-    background: linear-gradient(135deg, #1f1c2c, #928DAB);
-    padding: 20px; border-radius: 15px; text-align: center;
-    box-shadow: 0 0 15px #00f2ff55; transition: transform 0.2s;
+    background: linear-gradient(135deg, #141E30, #243B55);
+    padding: 18px;
+    border-radius: 18px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
 }
-.metric-card:hover { transform: scale(1.03); }
-.metric-card h3 { margin: 0; font-size: 14px; color: #aaa; }
-.metric-card h2 { margin: 5px 0 0; font-size: 32px; color: #00f2ff; }
 
-/* ── Section Titles ── */
+.metric-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 242, 255, 0.3);
+}
+
+.metric-card h3 {
+    font-size: 13px;
+    color: #bbb;
+    margin: 0;
+}
+
+.metric-card h2 {
+    font-size: 30px;
+    margin: 5px 0 0;
+    color: #00f2ff;
+}
+
+/* 🧠 SECTION TITLES */
 .section-title {
-    font-size: 20px; font-weight: bold;
-    border-left: 4px solid #00f2ff;
-    padding-left: 10px; margin: 30px 0 10px; color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-left: 12px;
+    border-left: 5px solid #00f2ff;
+    background: linear-gradient(to right, #00f2ff22, transparent);
 }
 
-/* ── Compact Sidebar ── */
+/* 🔥 ADVANCED SIDEBAR */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0d0d1a 0%, #1a1a2e 100%);
-    border-right: 1px solid #00f2ff33;
-    min-width: 220px !important;
-    max-width: 220px !important;
+    background: rgba(255,255,255,0.08);
+    color: #00f2ff;
+    border: 1px solid rgba(0,242,255,0.3);
 }
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3 {
-    font-size: 13px !important;
-    color: #00f2ff !important;
-    margin-bottom: 4px !important;
-    letter-spacing: 0.5px;
+
+/* Title */
+[data-testid="stSidebar"]::before {
+    content: "⚡ Smart Filters";
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #00f2ff;
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+    margin-bottom: 10px;
 }
-[data-testid="stSidebar"] .stMultiSelect label,
-[data-testid="stSidebar"] .stSelectbox label {
-    font-size: 11px !important;
-    color: #aaaaaa !important;
-    margin-bottom: 2px !important;
+
+/* Labels */
+[data-testid="stSidebar"] label {
+    font-size: 12px !important;
+    color: #9aa4b2 !important;
 }
-[data-testid="stSidebar"] .stMultiSelect > div,
-[data-testid="stSidebar"] .stSelectbox > div {
-    font-size: 11px !important;
-}
+
+/* Inputs */
 [data-testid="stSidebar"] [data-baseweb="select"] {
-    font-size: 11px !important;
-    min-height: 28px !important;
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(0,242,255,0.2) !important;
+    backdrop-filter: blur(10px);
 }
+
+/* Hover glow */
+[data-testid="stSidebar"] [data-baseweb="select"]:hover {
+    border: 1px solid #00f2ff !important;
+    box-shadow: 0 0 10px #00f2ff55;
+}
+
+/* Selected tags */
 [data-testid="stSidebar"] [data-baseweb="tag"] {
-    font-size: 10px !important;
-    padding: 1px 6px !important;
-    height: 18px !important;
-    background-color: #00f2ff22 !important;
-    border: 1px solid #00f2ff55 !important;
-    color: #00f2ff !important;
+    background: linear-gradient(135deg, #00f2ff, #ff00c8) !important;
+    color: black !important;
+    border-radius: 6px !important;
 }
-[data-testid="stSidebar"] hr {
-    border-color: #00f2ff22 !important;
-    margin: 6px 0 !important;
+
+/* 🔘 BUTTONS */
+.stButton>button {
+    background: linear-gradient(135deg, #00f2ff, #ff00c8);
+    border: none;
+    color: black;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-weight: bold;
 }
-[data-testid="stSidebar"] p {
-    font-size: 11px !important;
-    color: #888 !important;
+
+.stButton>button:hover {
+    transform: scale(1.05);
 }
-[data-testid="stSidebarContent"] {
-    padding: 12px 10px !important;
+
+/* 📦 EXPANDER */
+.streamlit-expanderHeader {
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 10px;
 }
+
+/* 📊 TABLE */
+[data-testid="stDataFrame"] {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* 🧊 SCROLLBAR */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background: #00f2ff55;
+    border-radius: 10px;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -92,6 +168,13 @@ body { background-color: #0E1117; color: white; }
 # TITLE
 # -------------------------------
 st.title("Malnutrition Detection & Analytics Platform")
+st.markdown("""
+<div class='glass-card'>
+<h4 style='color:#00f2ff;'>📊 Smart Nutrition Intelligence Dashboard</h4>
+<p style='color:#bbb;'>AI-powered insights · OLAP Analysis · Real-time Visualization</p>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("**Maharashtra Analysis** · Star Schema · OLAP · Visualization · Reporting")
 
 # -------------------------------
@@ -124,7 +207,6 @@ df['Nutrition_Status'] = df['MUAC_cm'].apply(classify)
 df['Status_Code'] = df['Nutrition_Status'].map({"SAM":1,"MAM":2,"Normal":3})
 df['BMI'] = (df['Weight_kg'] / ((df['Height_cm']/100)**2)).round(2)
 
-# JUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
 
 # ================================
 # 🔮 MACHINE LEARNING SECTION
